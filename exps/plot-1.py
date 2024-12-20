@@ -1,3 +1,5 @@
+# This script is used to plot the results of the tests of stand-alone DMM_Trie test
+# Only the last version of get is considered as a valid result
 import os
 import argparse
 import pandas as pd
@@ -42,9 +44,9 @@ for bz, vl, fn, fp in detail_files:
     summary_dict["batch_size"].append(bz)
     summary_dict["value_size"].append(vl)
     summary_dict["get_latency"].append(np.mean(df['get_latency'].to_numpy()))
-    summary_dict["put_latency"].append(np.mean(df['put_latency'].to_numpy()))
+    summary_dict["put_latency"].append(np.mean(df['put_latency'][-1].to_numpy()))
     summary_dict["get_throughput"].append(np.mean(df['get_throughput'].to_numpy()))
-    summary_dict["put_throughput"].append(np.mean(df['put_throughput'].to_numpy()))
+    summary_dict["put_throughput"].append(np.mean(df['put_throughput'][-1].to_numpy()))
     
 
 # plot summary
