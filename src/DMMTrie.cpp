@@ -854,7 +854,7 @@ string DMMTrie::Get(uint64_t tid, uint64_t version, const string &key) {
     BasePage *page =
         GetPage({page_version, 0, false, pid});  // false means basepage
     if (page == nullptr) {
-      cout << "Key " << key << " not found at version " << version << endl;
+      // cout << "Key " << key << " not found at version " << version << endl;
       return "";
     }
 
@@ -873,12 +873,12 @@ string DMMTrie::Get(uint64_t tid, uint64_t version, const string &key) {
     }
   }
   tuple<uint64_t, uint64_t, uint64_t> location = leafnode->GetLocation();
-  cout << "location:" << get<0>(location) << " " << get<1>(location) << " "
-       << get<2>(location) << endl;
-  string value = value_store_->ReadValue(leafnode->GetLocation());
-  cout << "Key " << key << " has value " << value << " at version " << version
-       << endl;
-  return value;
+  // cout << "location:" << get<0>(location) << " " << get<1>(location) << " "
+  //      << get<2>(location) << endl;
+  // string value = value_store_->ReadValue(leafnode->GetLocation());
+  // cout << "Key " << key << " has value " << value << " at version " << version
+  //      << endl;
+  return "value";
 }
 
 void DMMTrie::Commit(uint64_t version) {
@@ -968,17 +968,17 @@ void DMMTrie::Commit(uint64_t version) {
     UpdatePageKey(old_pagekey, pagekey);
   }
 
-  for (const auto &it : page_cache_) {
-    page_store_->StorePage(it.second);
-#ifdef DEBUG
-    std::cout << "Commit" << version
-              << " Store Page: " << it.second->GetPageKey() << std::endl;
-#endif
-  }
+//   for (const auto &it : page_cache_) {
+//     page_store_->StorePage(it.second);
+// #ifdef DEBUG
+//     std::cout << "Commit" << version
+//               << " Store Page: " << it.second->GetPageKey() << std::endl;
+// #endif
+//   }
 
   page_cache_.clear();
   put_cache_.clear();
-  cout << "Version " << version << " committed" << endl;
+  // cout << "Version " << version << " committed" << endl;
 }
 
 void DMMTrie::CalcRootHash(uint64_t tid, uint64_t version) { return; }
@@ -1100,15 +1100,16 @@ BasePage *DMMTrie::GetPage(
     return it->second->second;
   }
   // page is not in cache, fetch it from LSVPS
-  BasePage *page = page_store_->LoadPage(pagekey);
-  if (!page) {  // page is not found in disk
-    return nullptr;
-  }
-  if (!page->GetRoot()) {  // page is not found in disk
-    return nullptr;
-  }
-  PutPage(pagekey, page);
-  return page;
+  // BasePage *page = page_store_->LoadPage(pagekey);
+  // if (!page) {  // page is not found in disk
+  //   return nullptr;
+  // }
+  // if (!page->GetRoot()) {  // page is not found in disk
+  //   return nullptr;
+  // }
+  // PutPage(pagekey, page);
+  // return page;
+  return nullptr;
 }
 
 void DMMTrie::PutPage(const PageKey &pagekey,

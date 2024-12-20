@@ -71,7 +71,7 @@ $ ./build.sh
 ```
 ### build for debug
 ```
-$ ./build.sh debug
+$ ./build.sh --build-type debug
 ```
 
 ### Build with go-wrapper
